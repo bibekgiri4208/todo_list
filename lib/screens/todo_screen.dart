@@ -17,7 +17,7 @@ class TodoScreen extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 4,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Color(0xFF5F33E1),
         foregroundColor: Colors.white,
       ),
       body: Padding(
@@ -30,7 +30,7 @@ class TodoScreen extends StatelessWidget {
                   child: TextFormField(
                     decoration: InputDecoration(
                       hintText: "Enter a task...",
-                      prefixIcon: Icon(Icons.task_alt, color: Colors.deepPurple),
+                      prefixIcon: Icon(Icons.task_alt, color: Color(0xFF5F33E1)),
                       filled: true,
                       fillColor: Colors.grey[100],
                       border: OutlineInputBorder(
@@ -39,7 +39,7 @@ class TodoScreen extends StatelessWidget {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.deepPurple, width: 2),
+                        borderSide: BorderSide(color: Color(0xFF5F33E1), width: 2),
                       ),
                       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                     ),
@@ -49,7 +49,7 @@ class TodoScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: Color(0xFF5F33E1),
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                     shape: RoundedRectangleBorder(
