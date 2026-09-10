@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list/provider/todo_provider.dart';
 
-class TodoScreen extends StatelessWidget {
+class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
 
   @override
+  State<TodoScreen> createState() => _TodoScreenState();
+}
+
+class _TodoScreenState extends State<TodoScreen> {
+  TextEditingController _todoController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    final todoprovider = Provider.of<TodoProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -28,9 +38,13 @@ class TodoScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFormField(
+                    controller: _todoController,
                     decoration: InputDecoration(
                       hintText: "Enter a task...",
-                      prefixIcon: Icon(Icons.task_alt, color: Color(0xFF5F33E1)),
+                      prefixIcon: Icon(
+                        Icons.task_alt,
+                        color: Color(0xFF5F33E1),
+                      ),
                       filled: true,
                       fillColor: Colors.grey[100],
                       border: OutlineInputBorder(
@@ -39,15 +53,39 @@ class TodoScreen extends StatelessWidget {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Color(0xFF5F33E1), width: 2),
+                        borderSide: BorderSide(
+                          color: Color(0xFF5F33E1),
+                          width: 2,
+                        ),
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(width: 12),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_todoController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Please add Input"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    } else {
+                      todoprovider.addTodo(_todoController.text);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Added"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                    _todoController.clear();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF5F33E1),
                     foregroundColor: Colors.white,
@@ -63,6 +101,24 @@ class TodoScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+
+            SizedBox(height: 20),
+
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: todoprovider.todos.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(todoprovider.todos[index].title),
+                  trailing: IconButton(
+                    onPressed: () {
+                      todoprovider.removeTodo(index);
+                    },
+                    icon: Icon(Icons.delete, color: Colors.red),
+                  ),
+                );
+              },
             ),
           ],
         ),
