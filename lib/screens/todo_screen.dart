@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/provider/theme_provider.dart';
 import 'package:todo_list/provider/todo_provider.dart';
 
 class TodoScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   Widget build(BuildContext context) {
     final todoprovider = Provider.of<TodoProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,6 +31,14 @@ class _TodoScreenState extends State<TodoScreen> {
         elevation: 4,
         backgroundColor: Color(0xFF5F33E1),
         foregroundColor: Colors.white,
+        actions: [
+          Switch(
+            value: themeProvider.isDarkTheme,
+            onChanged: (_) {
+              themeProvider.toggleTheme();
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),

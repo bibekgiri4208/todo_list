@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/provider/theme_provider.dart';
 import 'package:todo_list/provider/todo_provider.dart';
 import 'package:todo_list/screens/todo_screen.dart';
 
@@ -13,11 +14,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => TodoProvider())],
-      child: MaterialApp(
-        title: 'My App',
-        debugShowCheckedModeBanner: false,
-        home: const TodoScreen(),
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => TodoProvider()),
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+
+            title: 'My App',
+            theme: ThemeData(
+              brightness: Brightness.light,
+              primarySwatch: Colors.blue,
+            ),
+
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: Colors.indigo,
+            ),
+            themeMode: themeProvider.themeMode,
+            home: TodoScreen(),
+          );
+        },
       ),
     );
   }
