@@ -56,7 +56,6 @@ class _TodoScreenState extends State<TodoScreen> {
                         color: Color(0xFF5F33E1),
                       ),
                       filled: true,
-                      fillColor: Colors.grey[100],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
