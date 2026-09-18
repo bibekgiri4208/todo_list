@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list/provider/image_picker_provider.dart';
 
 class ImagePickerScreen extends StatelessWidget {
   const ImagePickerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final imagePickerProvider = Provider.of<ImagePickerProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,17 +39,23 @@ class ImagePickerScreen extends StatelessWidget {
                         children: [
                           SizedBox(height: 30),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              imagePickerProvider.fromCamera();
+                            },
                             child: Text("Camera"),
                           ),
                           SizedBox(height: 10),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              imagePickerProvider.fromGallery();
+                            },
                             child: Text("Gallery"),
                           ),
                           SizedBox(height: 10),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              imagePickerProvider.clearImage();
+                            },
                             child: Text("Clear Image"),
                           ),
                         ],
@@ -59,6 +68,12 @@ class ImagePickerScreen extends StatelessWidget {
                 height: 200,
                 width: 200,
                 decoration: BoxDecoration(
+                  image: imagePickerProvider.image == null
+                      ? null
+                      : DecorationImage(
+                          image: FileImage(imagePickerProvider.image!),
+                          fit: BoxFit.cover,
+                        ),
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(15),
                 ),
