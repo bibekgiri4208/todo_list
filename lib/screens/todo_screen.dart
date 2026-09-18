@@ -28,7 +28,6 @@ class _TodoScreenState extends State<TodoScreen> {
           ),
         ),
         centerTitle: true,
-        elevation: 4,
         backgroundColor: Color(0xFF5F33E1),
         foregroundColor: Colors.white,
         actions: [
