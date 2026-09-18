@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/provider/image_picker_provider.dart';
 import 'package:todo_list/provider/theme_provider.dart';
 import 'package:todo_list/provider/todo_provider.dart';
+import 'package:todo_list/screens/image_picker_screen.dart';
 import 'package:todo_list/screens/todo_screen.dart';
 
 void main() {
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => TodoProvider()),
+        ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo,
             ),
             themeMode: themeProvider.themeMode,
-            home: TodoScreen(),
+            home: ImagePickerScreen(),
           );
         },
       ),
