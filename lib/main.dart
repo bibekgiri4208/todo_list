@@ -2,16 +2,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/firebase_options.dart';
+import 'package:todo_list/provider/authentication_provider.dart';
 import 'package:todo_list/provider/image_picker_provider.dart';
 import 'package:todo_list/provider/theme_provider.dart';
 import 'package:todo_list/provider/todo_provider.dart';
 import 'package:todo_list/screens/image_picker_screen.dart';
 import 'package:todo_list/screens/signin_screen.dart';
+import 'package:todo_list/screens/signup_screen.dart';
 import 'package:todo_list/screens/todo_screen.dart';
 
 void main() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => TodoProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
+        ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
@@ -42,7 +46,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo,
             ),
             themeMode: themeProvider.themeMode,
-            home: SigninScreen(),
+            home: SignupScreen(),
           );
         },
       ),

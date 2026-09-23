@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list/provider/authentication_provider.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -9,8 +11,13 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final authenticationProvider = Provider.of<AuthenticationProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -44,10 +51,11 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(height: 20),
 
               TextField(
+                controller: _userNameController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey.withValues(alpha: 0.15),
-                  hintText: "Firstname",
+                  hintText: "Username",
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(5),
@@ -58,20 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(height: 20),
 
               TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.withValues(alpha: 0.15),
-                  hintText: "Lastname",
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 20),
-
-              TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey.withValues(alpha: 0.15),
@@ -86,6 +81,7 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(height: 20),
 
               TextField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey.withValues(alpha: 0.15),
@@ -100,7 +96,44 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(height: 40),
 
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  final userName = _userNameController.text;
+                  final email = _emailController.text;
+                  final password = _passwordController.text;
+
+                  final messenger = ScaffoldMessenger.of(context);
+
+                  if (!email.endsWith('@gmail.com')) {
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text("Inavlid email"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    return;
+                  }
+
+                  final result = await authenticationProvider.signUp(
+                    email,
+                    password,
+                    userName,
+                  );
+                  if (result) {
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text("Account Created Successfully"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else {
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text("Failed to create Account"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
                 child: Container(
                   height: 60,
                   width: double.maxFinite,
@@ -108,16 +141,20 @@ class _SignupScreenState extends State<SignupScreen> {
                     color: Color(0xFF8E6CEF),
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  child: Center(
-                    child: Text(
-                      "Continue",
-                      style: GoogleFonts.gabarito(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  child: authenticationProvider.isLoaded
+                      ? Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        )
+                      : Center(
+                          child: Text(
+                            "SignUp",
+                            style: GoogleFonts.gabarito(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
                 ),
               ),
 
