@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/authentication/auth_wrapper_screen.dart';
 import 'package:todo_list/firebase_options.dart';
 import 'package:todo_list/provider/authentication_provider.dart';
 import 'package:todo_list/provider/image_picker_provider.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo,
             ),
             themeMode: themeProvider.themeMode,
-            home: SignupScreen(),
+            home: AuthWrapperScreen(),
           );
         },
       ),
