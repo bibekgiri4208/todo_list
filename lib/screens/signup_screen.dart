@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/provider/authentication_provider.dart';
+import 'package:todo_list/screens/signin_screen.dart';
+import 'package:todo_list/screens/todo_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -28,15 +30,18 @@ class _SignupScreenState extends State<SignupScreen> {
             children: [
               SizedBox(height: 80),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SigninScreen(),
+                    ),
+                  );
+                },
                 child: CircleAvatar(
                   radius: 22,
                   backgroundColor: Colors.grey.withValues(alpha: 0.55),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    size: 25,
-                    color: Colors.white,
-                  ),
+                  child: Icon(Icons.arrow_back, size: 25, color: Colors.white),
                 ),
               ),
               SizedBox(height: 40),
@@ -125,6 +130,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         backgroundColor: Colors.green,
                       ),
                     );
+                    Navigator.pop(context);
                   } else {
                     messenger.showSnackBar(
                       SnackBar(
