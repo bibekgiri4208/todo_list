@@ -35,6 +35,7 @@ class AuthenticationProvider extends ChangeNotifier {
       _isLoaded = true;
       notifyListeners();
       _user = await _authenticationServices.signIn(email, password);
+      _isLoaded = false;
       notifyListeners();
       return true;
     } catch (e) {
