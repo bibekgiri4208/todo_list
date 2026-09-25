@@ -5,9 +5,12 @@ import 'package:todo_list/authentication/auth_wrapper_screen.dart';
 import 'package:todo_list/firebase_options.dart';
 import 'package:todo_list/provider/authentication_provider.dart';
 import 'package:todo_list/provider/image_picker_provider.dart';
+import 'package:todo_list/provider/person_provider.dart';
 import 'package:todo_list/provider/theme_provider.dart';
 import 'package:todo_list/provider/todo_provider.dart';
+import 'package:todo_list/screens/add_person_screen.dart';
 import 'package:todo_list/screens/image_picker_screen.dart';
+import 'package:todo_list/screens/person_display_screen.dart';
 import 'package:todo_list/screens/signin_screen.dart';
 import 'package:todo_list/screens/signup_screen.dart';
 import 'package:todo_list/screens/todo_screen.dart';
@@ -30,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TodoProvider()),
         ChangeNotifierProvider(create: (_) => ImagePickerProvider()),
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
+        ChangeNotifierProvider(create: (_) => PersonProvider()),
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
@@ -47,7 +51,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo,
             ),
             themeMode: themeProvider.themeMode,
-            home: AuthWrapperScreen(),
+            home: PersonDisplayScreen(),
           );
         },
       ),
